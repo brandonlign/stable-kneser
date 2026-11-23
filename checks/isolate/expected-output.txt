@@ -1,0 +1,5 @@
+cycle independent_triples search_nodes covering_collections survivors
+9 30 878 123 0
+10 50 10484 120 0
+11 77 159427 0 0
+12 112 2992235 8 0

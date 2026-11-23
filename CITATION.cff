@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "Please cite the paper when using the result or verification code."
+title: "A characterization of 3-tight graphs"
+type: software
+authors:
+  - family-names: Li
+    given-names: Brandon
+    email: brandon.li.gn@gmail.com
+    affiliation: "Great Neck, New York, USA"
+repository-code: "https://github.com/brandonlign/stable-kneser"
+license: MIT
+keywords:
+  - stable Kneser graph
+  - chromatic number
+  - intersecting family
+  - Schrijver graph
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Li
+      given-names: Brandon
+  title: "A characterization of 3-tight graphs"
+  year: 2026

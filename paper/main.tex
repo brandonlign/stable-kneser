@@ -1,0 +1,576 @@
+\documentclass[11pt]{amsart}
+\usepackage[margin=1.15in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\numberwithin{equation}{section}
+
+\newcommand{\KG}{\operatorname{KG}}
+\newcommand{\up}{\operatorname{up}}
+
+\hypersetup{pdftitle={A characterization of 3-tight graphs},pdfauthor={Brandon Li}}
+
+\title{A characterization of $3$-tight graphs}
+\author{Brandon Li}
+\address{Great Neck, New York, USA}
+\email{brandon.li.gn@gmail.com}
+\subjclass[2020]{05C15, 05D05}
+\keywords{stable Kneser graph, chromatic number, intersecting family, Schrijver graph}
+
+\begin{document}
+
+\begin{abstract}
+The $G$-stable Kneser graph $\KG(G,k)$ has the independent $k$-sets of a graph
+$G$ as vertices, two of them adjacent when they are disjoint. If $G$ has $n$
+vertices, then $\chi(\KG(G,k))\le n-2k+2$, and $G$ is called $k$-tight when
+equality holds. Arana, Haxell, Kaiser and Stehl\'ik proved that in a $k$-tight
+graph every component is a path or a cycle, and every cycle other than $G$
+itself has length at least $4k-3$. They conjectured the converse. We prove the
+conjecture for $k=3$: a graph on at least seven vertices is $3$-tight if and
+only if it is a cycle or each of its components is a path or a cycle of length
+at least nine. The proof combines a minimal counterexample, the Polcyn--Ruci\'nski
+classification of maximal intersecting triple systems, and a triangle count,
+which leave ten small graphs that are settled by exact computer checks. For
+every $k\ge3$ we also show that a smallest counterexample has fewer than
+$k^3-k$ vertices.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+Let $G$ be a graph on $n$ vertices and let $k\ge2$. The \emph{$G$-stable
+Kneser graph} $\KG(G,k)$ has as its vertices the independent sets of size $k$
+in $G$, and two of them are adjacent when they are disjoint. When $G$ has no
+edges this is the Kneser graph, whose chromatic number is $n-2k+2$ by
+Lov\'asz's theorem. When $G$ is the cycle $C_n$ it is the Schrijver graph, and
+Schrijver~\cite{Schrijver} proved that its chromatic number is still $n-2k+2$.
+Since $\KG(G,k)$ is an induced subgraph of the Kneser graph, $n-2k+2$ is an
+upper bound for every $G$.
+
+Arana, Haxell, Kaiser and Stehl\'ik~\cite{AHKS} asked which graphs attain this
+bound. Following them, a graph $G$ on $n\ge2k+1$ vertices is \emph{$k$-tight}
+if $\chi(\KG(G,k))=n-2k+2$. They proved the following necessary condition.
+
+\begin{theorem}[{\cite[Theorem~1.2]{AHKS}}]\label{thm:necessary}
+Let $k\ge2$. If a graph $G$ on at least $2k+1$ vertices has a vertex of degree
+at least~$3$, or properly contains a cycle of length at most $4k-4$, then $G$
+is not $k$-tight.
+\end{theorem}
+
+They conjectured that this condition is also sufficient.
+
+\begin{conjecture}[{\cite[Conjecture~1.3]{AHKS}}]\label{conj:AHKS}
+For any $k\ge2$, a graph $G$ on at least $2k+1$ vertices is $k$-tight if and
+only if either $G$ is a cycle, or every component of $G$ is a path or a cycle
+of length at least $4k-3$.
+\end{conjecture}
+
+For $k=2$ the conjecture holds: it is equivalent to a theorem of Daneshpajouh,
+Meunier and Mizrahi~\cite{DMM}, as explained in~\cite[Theorem~1.1]{AHKS}.
+For $k\ge3$, Arana, Haxell, Kaiser and Stehl\'ik point out that even the
+simplest case not covered by Schrijver's theorem, a cycle of length at least
+$4k-3$ together with one isolated vertex, is open, and they prove it for all
+sufficiently long cycles~\cite[Theorem~1.4]{AHKS}. For $k=3$ this case was
+settled for cycle lengths $9$, $10$ and at least $15$ in~\cite{AFTD}.
+
+Our main result is the case $k=3$ of Conjecture~\ref{conj:AHKS}.
+
+\begin{theorem}\label{thm:main}
+A graph $G$ on $n\ge7$ vertices is $3$-tight if and only if $G$ is a cycle, or
+every component of $G$ is a path or a cycle of length at least~$9$.
+\end{theorem}
+
+The forward implication is Theorem~\ref{thm:necessary}. For the converse we
+study a smallest counterexample. Section~\ref{sec:prelim} shows that in a
+smallest counterexample every color class of an optimal coloring is an
+intersecting family with no common vertex, for every~$k$. For $k=3$, such
+maximal families were classified by Polcyn and Ruci\'nski~\cite{PR}. In
+Section~\ref{sec:large} we combine their classification with a count of
+triangles in an auxiliary graph to show that a smallest counterexample has at
+most $13$ vertices. This leaves ten graphs, each a cycle of length at least
+nine together with a path. Section~\ref{sec:isolate} handles the four graphs
+in which the path is a single vertex, and Section~\ref{sec:small} handles the
+other six. Both use exact computer checks.
+
+Theorem~\ref{thm:main} contains the case of a cycle with any number of
+isolated vertices.
+
+\begin{corollary}\label{cor:isolates}
+Let $c\ge3$, $r\ge1$ and $c+r\ge7$. The graph $C_c\sqcup rK_1$ is $3$-tight if
+and only if $c\ge9$.
+\end{corollary}
+
+\begin{proof}
+If $c\ge9$, the graph satisfies the condition of Theorem~\ref{thm:main}. If
+$c\le8$, it properly contains a cycle of length at most $8=4k-4$, so it is not
+$3$-tight by Theorem~\ref{thm:necessary}.
+\end{proof}
+
+The method also gives a bound on the size of a counterexample for every rank
+(Section~\ref{sec:allk}).
+
+\begin{theorem}\label{thm:allk}
+Let $k\ge3$. If Conjecture~\ref{conj:AHKS} fails for $k$, then it fails for
+some graph on at most $k^3-k-1$ vertices.
+\end{theorem}
+
+For comparison, the one-isolate case of~\cite{AFTD} holds for cycles of length
+at least $k((k-1)^2+1)$, which is also cubic in~$k$. Theorem~\ref{thm:allk}
+applies to all graphs in the conjecture. The conjecture for $k\ge4$ remains
+open.
+
+\section{Preliminaries and minimal counterexamples}\label{sec:prelim}
+
+All graphs are finite and simple. For a graph $G$ we write $V(G)$ and $E(G)$
+for its vertex and edge sets. A set $S\subseteq V(G)$ is \emph{independent} if
+it contains no edge of $G$. We write $\mathcal I_k(G)$ for the family of
+independent $k$-sets of $G$, which is the vertex set of $\KG(G,k)$. A family of
+sets is \emph{intersecting} if every two of its members meet. It is a
+\emph{star} if all its members contain a common element, and a \emph{nonstar}
+otherwise. A color class of a proper coloring of $\KG(G,k)$ is exactly an
+intersecting subfamily of $\mathcal I_k(G)$.
+
+\begin{definition}
+Let $k\ge2$. A graph $G$ is \emph{admissible} (at rank $k$) if $G$ is a cycle,
+or every component of $G$ is a path or a cycle of length at least $4k-3$.
+Single vertices count as paths. A \emph{path forest} is a graph whose
+components are all paths.
+\end{definition}
+
+\begin{lemma}\label{lem:upper}
+If $G$ has $n\ge2k$ vertices, then $\chi(\KG(G,k))\le n-2k+2$.
+\end{lemma}
+
+\begin{proof}
+Order the vertices as $v_1,\dots,v_n$. Give a set $S\in\mathcal I_k(G)$ the
+color $i$ if its smallest index is $i\le n-2k+1$, and the color $n-2k+2$
+otherwise. Sets of color $i\le n-2k+1$ share $v_i$. Sets of color $n-2k+2$ lie
+in the last $2k-1$ vertices, so any two of them meet.
+\end{proof}
+
+\begin{lemma}\label{lem:spanning}
+If $H$ is a spanning subgraph of $G$, then $\KG(G,k)$ is an induced subgraph
+of $\KG(H,k)$, and so $\chi(\KG(G,k))\le\chi(\KG(H,k))$. In particular, every
+path forest on $n\ge2k+1$ vertices is $k$-tight.
+\end{lemma}
+
+\begin{proof}
+Every independent set of $G$ is independent in $H$, and adjacency in both
+graphs means disjointness. A path forest on $n$ vertices is a spanning
+subgraph of $C_n$, and $C_n$ is $k$-tight by Schrijver's
+theorem~\cite{Schrijver}. Lemma~\ref{lem:upper} gives the upper bound.
+\end{proof}
+
+A \emph{counterexample} (at rank $k$) is an admissible graph on at least $2k+1$
+vertices that is not $k$-tight. It is \emph{minimal} if no counterexample has
+fewer vertices. Note that admissibility depends only on the components.
+
+\begin{lemma}\label{lem:minimal}
+Let $k\ge2$ and let $G$ be a minimal counterexample on $n$ vertices. Then the
+following hold.
+\begin{enumerate}
+\item[(a)] $G$ has a cycle component of length at least $4k-3$ and at least
+one other component. In particular $n\ge4k-2$ and $|E(G)|\le n$.
+\item[(b)] $\KG(G,k)$ has a proper coloring with $n-2k+1$ colors, and in every
+such coloring each color class is a nonstar.
+\item[(c)] Let $G'$ be obtained from $G$ by adding edges that join all path
+components of $G$ into a single path. Then $G'$ is also a minimal
+counterexample, so \textup{(a)} and \textup{(b)} hold for $G'$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) By Schrijver's theorem and Lemma~\ref{lem:spanning}, $G$ is neither a
+cycle nor a path forest. Since $G$ is admissible, it has a cycle component,
+of length at least $4k-3$, and another component. Every vertex has degree at
+most two, so $|E(G)|\le n$.
+
+(b) Since $G$ is not $k$-tight, Lemma~\ref{lem:upper} gives a coloring with
+$n-2k+1$ colors. Suppose some color class is a star with common vertex $v$.
+Deleting $v$ from a path leaves at most two paths, and deleting it from a cycle
+component of length at least $4k-3$ leaves a path. The other components are
+unchanged, so $G-v$ is admissible. By~(a), $G-v$ has $n-1\ge2k+1$ vertices,
+so by minimality it is $k$-tight: $\chi(\KG(G-v,k))=n-2k+1$. But
+$\KG(G-v,k)$ is the induced subgraph of $\KG(G,k)$ on the sets avoiding $v$,
+and none of these has the color of the star. So $\KG(G-v,k)$ is colored with
+at most $n-2k$ colors, a contradiction.
+
+(c) The components of $G'$ are the cycles of $G$ and one path, so $G'$ is
+admissible. By Lemma~\ref{lem:spanning},
+$\chi(\KG(G',k))\le\chi(\KG(G,k))<n-2k+2$. So $G'$ is a counterexample with
+$n$ vertices, hence minimal.
+\end{proof}
+
+For $k=3$ and $n\le13$ this pins down the shape of a minimal counterexample:
+two cycles of length at least $9$ need $18$ vertices, so by
+Lemma~\ref{lem:minimal}(a) and~(c) we may take it to be $C_c\sqcup P_r$ with
+$c\ge9$, $r\ge1$ and $c+r=n\le13$. Here $P_r$ is a path with $r$ vertices.
+
+\section{A cycle and an isolated vertex}\label{sec:isolate}
+
+In this section $k=3$. Let $c\ge9$ and let $H=C_c\sqcup K_1$, where the
+isolated vertex is called $\infty$. Then $H$ has $c+1$ vertices, so $H$ is
+$3$-tight if and only if $\KG(H,3)$ has no proper coloring with $c-4$ colors.
+We say that a triple $U$ \emph{covers} a triple $W$ if $|U\cap W|\ge2$, that
+is, if $W$ contains one of the three pairs in~$U$.
+
+\begin{lemma}\label{lem:anchors}
+Let $c\ge9$. If $\KG(C_c\sqcup K_1,3)$ has a proper coloring with $c-4$
+colors, then there are independent triples $U_1,\dots,U_{c-4}$ of $C_c$ with
+the following properties.
+\begin{enumerate}
+\item[(i)] No two of them share a pair.
+\item[(ii)] Every independent triple of $C_c$ is covered by some $U_i$.
+\item[(iii)] For every independent pair $F$ of $C_c$ there is an index $i$
+such that $U_i$ meets $F$, and every independent triple of $C_c$ that is
+covered by $U_i$ and by no other $U_j$ also meets~$F$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Restrict the coloring to $\KG(C_c,3)$. By Schrijver's theorem this graph has
+chromatic number $c-4$, so the restriction is an optimal coloring that uses
+all $c-4$ colors. In an optimal coloring, every color $i$ has a vertex that
+has neighbors of all the other colors. Otherwise we could recolor each vertex
+of color $i$ with a color missing from its neighborhood. These vertices are
+pairwise nonadjacent, so the result is proper, and it uses one color fewer.
+Let $U_i$ be such a vertex of color~$i$.
+
+Let $F\subset U_i$ be a pair. The triple $F\cup\{\infty\}$ is independent in
+$H$. For every color $j\ne i$, some triple of color $j$ is disjoint from
+$U_i$, hence from $F\cup\{\infty\}$. So $F\cup\{\infty\}$ has color~$i$. This
+proves~(i), since a pair in $U_i\cap U_j$ would force two colors on the same
+vertex.
+
+Let $W$ be an independent triple of $C_c$ of color $i$. If $W$ contains no
+pair of $U_i$, then $|W\cap U_i|\le1$, so some pair $F\subset U_i$ is
+disjoint from $W$. Then $F\cup\{\infty\}$ and $W$ are disjoint and both have
+color $i$, which is impossible. So $W$ is covered by $U_i$. This
+proves~(ii), and it shows that a triple covered by $U_i$ alone has color~$i$.
+
+For~(iii), let $F$ be an independent pair of $C_c$ and let $i$ be the color
+of $F\cup\{\infty\}$. Every triple of color $i$, including $U_i$ and every
+triple covered by $U_i$ alone, meets $F\cup\{\infty\}$. Since these triples
+avoid $\infty$, they meet~$F$.
+\end{proof}
+
+\begin{lemma}\label{lem:isolate}
+For $9\le c\le12$, no family $U_1,\dots,U_{c-4}$ as in
+Lemma~\ref{lem:anchors} exists. Hence $C_c\sqcup K_1$ is $3$-tight for
+$9\le c\le12$.
+\end{lemma}
+
+\begin{proof}
+This is an exhaustive computer search, carried out by
+\path{checks/isolate/verifier.cpp}. For each $c$ it lists every collection of
+$c-4$ independent triples of $C_c$ satisfying (i) and (ii), and tests~(iii) on
+each one. The search keeps the set of triples not yet covered. At each step it
+picks an uncovered triple $W$ and branches over the independent triples that
+cover $W$ and share no pair with the triples already chosen, in a fixed
+order. In the branch for a triple $U$, the triples
+tried earlier for $W$ are excluded. Every collection satisfying (ii) contains
+a first triple, in this order, that covers $W$. So every collection is found
+exactly once. Once all triples are covered, the search still lists every way
+of completing the collection to $c-4$ triples. There is no symmetry
+reduction. The results are as follows.
+\begin{center}
+\begin{tabular}{rrrrr}
+\toprule
+$c$ & $|\mathcal I_3(C_c)|$ & search nodes & with (i), (ii) & with (iii)\\
+\midrule
+$9$ & $30$ & $878$ & $123$ & $0$\\
+$10$ & $50$ & $10{,}484$ & $120$ & $0$\\
+$11$ & $77$ & $159{,}427$ & $0$ & $0$\\
+$12$ & $112$ & $2{,}992{,}235$ & $8$ & $0$\\
+\bottomrule
+\end{tabular}
+\end{center}
+No collection satisfies~(iii), so by Lemma~\ref{lem:anchors} no coloring
+with $c-4$ colors exists.
+\end{proof}
+
+\section{Graphs with at least fourteen vertices}\label{sec:large}
+
+In this section $k=3$ and we show that a minimal counterexample has at most
+$13$ vertices. The tool is the classification of maximal intersecting triple
+systems by Polcyn and Ruci\'nski~\cite{PR}. For a pair $P$ of vertices let
+$\up(P)$ be the set of all triples of the ground set containing~$P$.
+
+\begin{lemma}[{\cite[Theorem~4 and Section~2.4]{PR}}]\label{lem:PR}
+Let $n\ge7$ and let $\mathcal F$ be a maximal intersecting family of triples
+on an $n$-element set that is not a star. Then there are a set $\mathcal P$
+of $b$ pairs and a set $\mathcal X$ of $g$ triples with
+\[
+\mathcal F=\bigcup_{P\in\mathcal P}\up(P)\cup\mathcal X,
+\]
+where $(b,g)$ is one of $(3,1)$, $(3,0)$, $(2,3)$, $(1,6)$, or $(0,g)$ with
+$g\le10$. In every case $g\le1+3(3-b)$.
+\end{lemma}
+
+\begin{proof}
+For $n\ge7$, Polcyn and Ruci\'nski show that the maximal intersecting families
+of triples are, up to isomorphism, the full star, the families
+$H_1(n),\dots,H_{11}(n)$, and the families $K_5\cup(n-5)K_1$, $F_7\cup(n-7)K_1$
+and $F_{10}\cup(n-7)K_1$. In their notation $H_1(n)$, $H_2(n)$, $H_3(n)$ and
+$H_4(n),H_5(n),H_6(n)$ are written exactly in the displayed form, with
+$(b,g)$ equal to $(3,1)$, $(3,0)$, $(2,3)$ and $(1,6)$ respectively. The
+remaining families have at most $10$ members in total, and we take
+$\mathcal P=\emptyset$ for them.
+\end{proof}
+
+For a triple $T\in\mathcal F$ that contains no pair of $\mathcal P$, we say
+that $T$ is an \emph{exceptional} member of $\mathcal F$. Thus $\mathcal F$
+has at most $g$ exceptional members.
+
+We also need a standard lower bound on the number of triangles.
+
+\begin{lemma}\label{lem:triangles}
+A graph $J$ with $n$ vertices and $e$ edges has at least
+\[
+F_n(e)=\frac{e(4e-n^2)}{3n}
+\]
+triangles.
+\end{lemma}
+
+\begin{proof}
+An edge $uv$ lies in at least $d_u+d_v-n$ triangles, since $N(u)$ and $N(v)$
+are subsets of an $n$-set. Summing over edges counts each triangle three times,
+so $3t(J)\ge\sum_{uv\in E(J)}(d_u+d_v)-ne=\sum_v d_v^2-ne\ge4e^2/n-ne$ by
+the Cauchy--Schwarz inequality.
+\end{proof}
+
+The function $F_n$ is convex, with $F_n'(e)=(8e-n^2)/(3n)$.
+
+\begin{proposition}\label{prop:large}
+Every minimal counterexample at rank $3$ has at most $13$ vertices.
+\end{proposition}
+
+\begin{proof}
+Let $G$ be a minimal counterexample on $n\ge14$ vertices, and let $m=n-5$. By
+Lemma~\ref{lem:minimal}(b), $\KG(G,3)$ has a coloring with $m'\le m$
+nonempty color classes, all nonstars. Extend each class to a maximal
+intersecting family $\mathcal F_i$ of triples of $V(G)$, where $i=1,\dots,m'$.
+A family containing a nonstar is a nonstar, so Lemma~\ref{lem:PR} gives sets
+$\mathcal P_i$ of $b_i$ pairs and bounds $g_i\le1+3(3-b_i)$ on the number of
+exceptional members of~$\mathcal F_i$. Put
+\[
+D=\sum_{i=1}^{m'}(3-b_i)\ge0.
+\]
+
+Let $J$ be the graph on $V(G)$ whose edges are the pairs that are neither
+edges of $G$ nor members of any $\mathcal P_i$. Write $e_0=\binom n2-|E(G)|-3m$. Then
+\begin{equation}\label{eq:eJ}
+e(J)\ge\binom n2-|E(G)|-\sum_i b_i=\binom n2-|E(G)|-3m'+D\ge e_0+D.
+\end{equation}
+A triangle $T$ of $J$ is an independent triple of $G$, so it has some color
+$i$ and lies in $\mathcal F_i$. It contains no pair of $\mathcal P_i$, so it
+is an exceptional member of $\mathcal F_i$. Hence
+\begin{equation}\label{eq:tJ}
+t(J)\le\sum_i g_i\le m'+3D\le m+3D.
+\end{equation}
+
+We now show that $F_n(e_0)>m$ and $F_n'(e_0)>3$. Then $F_n$ is increasing
+for $e\ge e_0$, and convexity together with~\eqref{eq:eJ} gives
+$t(J)\ge F_n(e(J))\ge F_n(e_0)+DF_n'(e_0)>m+3D$, which
+contradicts~\eqref{eq:tJ}. Since $F_n$ and $F_n'$ are increasing for
+$e\ge n^2/8$, it suffices to check the two inequalities at a lower bound
+for~$e_0$ that is at least $n^2/8$.
+
+If $n=14$, then $m=9$. Two cycles of length at least $9$ need $18$ vertices,
+so by Lemma~\ref{lem:minimal}(a) the graph $G$ has a path component, and
+$|E(G)|\le n-1=13$. Hence $e_0\ge91-13-27=51$, and
+\[
+F_{14}(51)=\frac{68}{7}>9,\qquad F_{14}'(51)=\frac{106}{21}>3.
+\]
+
+If $n\ge15$, then $|E(G)|\le n$, so
+\[
+e_0\ge E_n:=\binom n2-n-3(n-5)=\frac{n^2-9n+30}{2}.
+\]
+We have $E_n\ge4n$, with equality at $n=15$, and $4E_n-n^2=n^2-18n+60>0$.
+Therefore
+\[
+F_n(E_n)=\frac{E_n}{3n}\,(4E_n-n^2)\ge\frac43\,(n^2-18n+60),
+\qquad
+F_n'(E_n)=\frac{3n^2-36n+120}{3n}.
+\]
+The first bound exceeds $n-5$ because $4n^2-75n+255>0$ for $n\ge15$; at
+$n=15$ it equals $30$, and it is increasing for $n\ge10$. The second exceeds
+$3$ because $3n^2-45n+120>0$ for $n\ge15$; at $n=15$ it equals $120$, and it is
+increasing for $n\ge8$.
+\end{proof}
+
+\section{The remaining small graphs}\label{sec:small}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+The forward implication is Theorem~\ref{thm:necessary} with $k=3$. For the
+converse, suppose there is a counterexample at rank $3$, and take a minimal
+one. By Proposition~\ref{prop:large} and the remark after
+Lemma~\ref{lem:minimal}, we may assume it is $G=C_c\sqcup P_r$ with $c\ge9$,
+$r\ge1$ and $n=c+r\le13$. If $r=1$ this contradicts Lemma~\ref{lem:isolate}.
+The six remaining graphs are listed in Table~\ref{tab:covers}.
+
+Let $m=n-5$. By Lemma~\ref{lem:minimal}(b), there is a coloring of
+$\KG(G,3)$ with at most $m$ colors in which every class is a nonstar. Extend
+each class to an inclusion-maximal intersecting subfamily of
+$\mathcal I_3(G)$. These extensions are still nonstars, and together they
+cover $\mathcal I_3(G)$. It therefore suffices to show the following claim:
+\emph{for each graph in Table~\ref{tab:covers}, the independent triples cannot
+be covered by $m$ maximal intersecting nonstar subfamilies of
+$\mathcal I_3(G)$.}
+
+The maximal intersecting subfamilies of $\mathcal I_3(G)$ are the maximal
+cliques of the graph on $\mathcal I_3(G)$ in which two triples are adjacent
+when they meet. We list all maximal cliques with the Bron--Kerbosch
+algorithm with pivoting~\cite{BK} and keep those with no common vertex
+(\path{checks/covers/maximal_families.cpp}). Their numbers are in
+Table~\ref{tab:covers}. We then rule out a cover by $m$ of them in two
+different ways.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{lrrrr}
+\toprule
+$G$ & $|\mathcal I_3(G)|$ & maximal nonstar families & $m$ & certificates\\
+\midrule
+$C_9\sqcup P_2$ & $84$ & $1{,}842$ & $6$ & $24$\\
+$C_9\sqcup P_3$ & $120$ & $11{,}949$ & $7$ & $26$\\
+$C_{10}\sqcup P_2$ & $120$ & $8{,}130$ & $7$ & $16$\\
+$C_9\sqcup P_4$ & $165$ & $32{,}871$ & $8$ & $28$\\
+$C_{10}\sqcup P_3$ & $165$ & $35{,}974$ & $8$ & $26$\\
+$C_{11}\sqcup P_2$ & $165$ & $28{,}864$ & $8$ & $18$\\
+\bottomrule
+\end{tabular}
+\caption{The six graphs $C_c\sqcup P_r$ with $r\ge2$ and $c+r\le13$.}
+\label{tab:covers}
+\end{table}
+
+\emph{First method: exact search} (\path{checks/covers/exact_cover.cpp}).
+The search keeps the set of uncovered triples. It picks an uncovered triple
+and branches over the families containing it, excluding in each branch the
+families tried earlier for that triple, so every cover is reached. A branch is
+cut when some uncovered triple lies in no remaining family, or when the $q$
+largest remaining families, for $q$ the number of families still allowed,
+cannot cover what is left. The last test is applied both to the number of
+uncovered triples and to their total weight under a fixed nonnegative integer
+weighting. Both are valid bounds for any such weighting. The search finds no
+cover in all six cases.
+
+\emph{Second method: integer certificates.} This is checked by
+\path{checks/orbits/verify_orbits.py}. Suppose $\mathcal A_1,\dots,\mathcal A_m$ cover $\mathcal I_3(G)$, with no
+family redundant, and let $\mathcal A=\mathcal A_1$ be a largest one, of size
+$s$. Then $ms\ge|\mathcal I_3(G)|$. The automorphisms of $G$ (rotations and
+reflections of the cycle, and reversal of the path) permute the families, so
+we may take $\mathcal A$ from a fixed set of orbit representatives. Let
+$\mathcal U=\mathcal I_3(G)\setminus\mathcal A$. Each other family
+$\mathcal B$ has size at most $s$. It must cover at least
+\[
+\max\bigl(1,\ |\mathcal U|-(m-2)s\bigr)
+\]
+triples of $\mathcal U$: at least one, since it is not redundant, and enough
+that the other $m-2$ families can finish the cover. Call such families
+\emph{eligible}. For every representative $\mathcal A$ the program checks one
+of three certificates: there is no eligible family; some triple of
+$\mathcal U$ lies in no eligible family; or there are nonnegative integer
+weights on $\mathcal U$ with total weight greater than $(m-1)q$, while every
+eligible family has weight at most $q$. Each certificate rules out a cover.
+The number of representatives checked is in Table~\ref{tab:covers}. All
+arithmetic is in integers.
+
+Both methods confirm the claim. So no minimal counterexample exists, and
+Theorem~\ref{thm:main} follows.
+\end{proof}
+
+\section{A bound for every rank}\label{sec:allk}
+
+\begin{proof}[Proof of Theorem~\ref{thm:allk}]
+Let $k\ge3$ and suppose that a minimal counterexample $G$ has $n\ge k^3-k$
+vertices. By Lemma~\ref{lem:minimal}(b), $\mathcal I_k(G)$ is covered by at
+most $n-2k+1$ intersecting nonstar families of $k$-sets.
+
+By the Hilton--Milner theorem~\cite{HM}, a nonstar intersecting family of
+$k$-subsets of an $n$-set, with $n>2k$, has at most
+$\binom{n-1}{k-1}-\binom{n-k-1}{k-1}+1$ members. Here
+$\binom{n-1}{k-1}-\binom{n-k-1}{k-1}$ is the number of $k$-sets that contain a
+fixed vertex $x$ and meet a fixed $k$-set $A$ not containing $x$. This is the
+union of the $k$ families $\up(\{x,a\})$ of $k$-sets containing $x$ and $a$,
+for $a\in A$, each of size $\binom{n-2}{k-2}$. Since $k\ge3$, two of them
+share a set, so the union has at most $k\binom{n-2}{k-2}-1$ members. Hence
+every nonstar intersecting family has at most $k\binom{n-2}{k-2}$ members.
+
+On the other hand, each edge of $G$ lies in $\binom{n-2}{k-2}$ of the
+$k$-sets, and $|E(G)|\le n$ by Lemma~\ref{lem:minimal}(a). So
+\[
+|\mathcal I_k(G)|\ge\binom nk-n\binom{n-2}{k-2}.
+\]
+Using $\binom nk=\frac{n(n-1)}{k(k-1)}\binom{n-2}{k-2}$, the difference
+$|\mathcal I_k(G)|-(n-2k+1)\,k\binom{n-2}{k-2}$ is at least
+$\binom{n-2}{k-2}/(k(k-1))$ times
+\[
+n(n-1)-nk(k-1)-(n-2k+1)k^2(k-1)
+=n\bigl(n-1-(k^3-k)\bigr)+k^2(k-1)(2k-1).
+\]
+At $n=k^3-k$ the right side equals $k(k-1)(2k^2-2k-1)>0$, and it increases
+with $n$ for $n\ge k^3-k$. So there are more independent $k$-sets than the
+color classes can hold, a contradiction.
+\end{proof}
+
+\section*{Verification code}
+
+The programs cited in Sections~\ref{sec:isolate} and~\ref{sec:small} are
+available at\\ \url{https://github.com/brandonlign/stable-kneser}. A single
+script, \path{checks/run_all.sh}, compiles and runs all of them in under a
+minute and needs only a C++17 compiler and Python~3.
+
+\section*{Acknowledgments}
+Claude (Anthropic) helped with the proofs, the verification code, and the
+manuscript.
+
+\begin{thebibliography}{9}
+
+\bibitem{AFTD}
+AFTD, \emph{A cycle plus an isolated vertex is $k$-tight once the cycle has
+length at least $k((k-1)^2+1)$}, Open problem OP-193, 12 November 2026,
+\url{https://rainwangphy.github.io/aftd-platform/blog/2026-11-12-op-193/}.
+
+\bibitem{AHKS}
+C.~Arana, P.~Haxell, T.~Kaiser, and M.~Stehl\'ik, \emph{The chromatic number
+of $G$-stable Kneser graphs}, preprint, 2026,
+\href{https://arxiv.org/abs/2610.17884}{arXiv:2610.17884}.
+
+\bibitem{BK}
+C.~Bron and J.~Kerbosch, \emph{Algorithm 457: finding all cliques of an
+undirected graph}, Comm. ACM \textbf{16} (1973), 575--577.
+
+\bibitem{DMM}
+H.~Daneshpajouh, F.~Meunier, and G.~Mizrahi, \emph{Colorings of complements
+of line graphs}, J. Graph Theory \textbf{98} (2021), 216--233.
+
+\bibitem{HM}
+A.~J.~W. Hilton and E.~C. Milner, \emph{Some intersection theorems for systems
+of finite sets}, Quart. J. Math. Oxford Ser. (2) \textbf{18} (1967), 369--384.
+
+\bibitem{PR}
+J.~Polcyn and A.~Ruci\'nski, \emph{A hierarchy of maximal intersecting triple
+systems}, Opuscula Math. \textbf{37} (2017), 597--608.
+
+\bibitem{Schrijver}
+A.~Schrijver, \emph{Vertex-critical subgraphs of Kneser graphs}, Nieuw Arch.
+Wisk. (3) \textbf{26} (1978), 454--461.
+
+\end{thebibliography}
+
+\end{document}

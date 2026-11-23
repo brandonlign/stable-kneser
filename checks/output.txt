@@ -1,0 +1,31 @@
+== Lemma 3.2: a cycle of length 9-12 plus one isolated vertex
+cycle independent_triples search_nodes covering_collections survivors
+9 30 878 123 0
+10 50 10484 120 0
+11 77 159427 0 0
+12 112 2992235 8 0
+no collection survives in any of the four cases
+
+== Section 5: no cover by n-5 nonstar families (Table 1), branch-and-bound search
+C9+P2: 84 independent triples, 1842 maximal nonstar families, no cover by 6
+C9+P3: 120 independent triples, 11949 maximal nonstar families, no cover by 7
+C10+P2: 120 independent triples, 8130 maximal nonstar families, no cover by 7
+C9+P4: 165 independent triples, 32871 maximal nonstar families, no cover by 8
+C10+P3: 165 independent triples, 35974 maximal nonstar families, no cover by 8
+C11+P2: 165 independent triples, 28864 maximal nonstar families, no cover by 8
+
+== Section 5: no cover, integer weight certificates (second method)
+9 2 84 1842 9900
+OK C9+P2: 24 largest-family orbit certificates
+9 3 120 11949 45219
+OK C9+P3: 26 largest-family orbit certificates
+10 2 120 8130 37137
+OK C10+P2: 16 largest-family orbit certificates
+9 4 165 32871 128773
+OK C9+P4: 28 largest-family orbit certificates
+10 3 165 35974 136622
+OK C10+P3: 26 largest-family orbit certificates
+11 2 165 28864 120488
+OK C11+P2: 18 largest-family orbit certificates
+
+all checks passed
